@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Lista de Estudiantes{% endblock %}
+{% block content %}
+<a href="{{ url_for('create_estudiante') }}" class="btn btn-success mb-3">Agregar Estudiante</a>
+<br>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>No. control</th>
+            <th>Nombre</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
+            <th>Semestre</th>
+            <th>Acciones</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for estudiante in estudiantes %}
+        <tr>
+            <td>{{ estudiante.no_control }}</td>
+            <td>{{ estudiante.nombre }}</td>
+            <td>{{ estudiante.ap_paterno }}</td>
+            <td>{{ estudiante.ap_materno }}</td>
+            <td>{{ estudiante.semestre }}</td>
+            <td>
+                <a href="{{ url_for('delete_estudiante1', no_control=estudiante.no_control) }}"
+                   class="btn btn-danger">Eliminar</a>
+                <a href="{{ url_for('update_estudiante', no_control= estudiante.no_control )}}" 
+                class="btn btn-warning">Actualizar</a> 
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

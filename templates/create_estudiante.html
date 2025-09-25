@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title%} Agregar Estudiante {% endblock %}
+{% block content%}
+<div class="row">
+    <div class="col">
+    </div>
+    <div class="col">
+        <div class="card ">
+            <div class="card-body">
+                <h3 class="card-title">Agregar estudiante</h3>
+                <form action="{{ url_for('create_estudiante') }}" method="POST">
+                    <div class="form-group mb-4">
+                        <label for="no_control">No. Control:</label>
+                        <input type="text" class="form-control" id="no_control" name="no_control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="ap_paterno">Apellido Paterno:</label>
+                        <input type="text" class="form-control" id="ap_paterno" name="ap_paterno" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="ap_materno">Apellido Materno:</label>
+                        <input type="text" class="form-control" id="ap_materno" name="ap_materno" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="semestre">Semestre:</label>
+                        <input type="number" class="form-control" id="semestre" name="semestre" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="{{ url_for('index') }}" class="btn btn-danger ">Cancelar</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+    </div>
+</div>
+
+
+
+{% endblock%}
