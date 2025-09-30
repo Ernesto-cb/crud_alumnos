@@ -97,20 +97,37 @@ def update_estudiante(no_control):
         return redirect(url_for('index'))
     return render_template('update_estudiante.html', estudiante=estudiante)
 
-#endpoint para obtener todos los alumnos
+
+
+#endpoint para obtener todos los estudiantes
 @app.route('/estudiantes', methods=['GET'])
 def get_estudiantes():
     estudiantes = Estudiante.query.all()
     lista_estudiantes = []
     for estudiante in estudiantes:
         lista_estudiantes.append({
-            'no_control': estudiante.no_control,
-            'nombre': estudiante.nombre,
-            'ap_paterno': estudiante.ap_paterno,
-            'ap_materno': estudiante.ap_materno,
-            'semestre': estudiante.semestre
+            'no_control ': estudiante.no_control,
+            'nombre ': estudiante.nombre,
+            'ap_paterno ': estudiante.ap_paterno,
+            'ap_materno ': estudiante.ap_materno,
+            'semestre ': estudiante.semestre
         })
     return jsonify(lista_estudiantes)
+    
+#endpoint para obtener un estudiante por el no_control
+@app.route('/estudiantes/<no_control>', methods=['GET'])
+def get_estudiante(no_control):
+    estudiante = Estudiante.query.get(no_control)
+    if estudiante is None:
+        return jsonify ({'msg':'Estudiante no encontrado'})
+    return jsonify({
+        'no_control': estudiante.no_control,
+        'nombre': estudiante.nombre,
+        'ap_paterno': estudiante.ap_paterno,
+        'ap_materno': estudiante.ap_materno,
+        'semestre': estudiante.semestre,
+    })
+
 
 #endpoint para agregar un nuevo alumno
 @app.route('/estudiantes', methods=['POST'])
@@ -183,21 +200,6 @@ def insert_estudiante():
     resp.headers['Location'] = url_for('get_estudiante', no_control=no_control, _external=True)
     return resp
 
-
-#endpoint para obtener un alumno por el no_control
-@app.route('/estudiantes/<string:no_control>', methods=['GET'])
-def get_estudiante(no_control):
-    estudiante = Estudiante.query.get(no_control)
-    if estudiante is None:
-        return jsonify({'message': 'Estudiante no encontrado'})
-    return jsonify({
-        'no_control': estudiante.no_control,
-        'nombre': estudiante.nombre,
-        'ap_paterno': estudiante.ap_paterno,
-        'ap_materno': estudiante.ap_materno,
-        'semestre': estudiante.semestre
-    })
-
 #endpoint para eliminar un estudiante
 @app.route('/estudiantes/<no_control>', methods=['DELETE'])
 def delete_estudiante(no_control):
@@ -207,6 +209,7 @@ def delete_estudiante(no_control):
     db.session.delete(estudiante)
     db.session.commit()
     return jsonify({'msg': 'Estudiante eliminado correctamente'})
+
 
 #endpoint para actualizar un estudiante
 @app.route('/estudiantes/<no_control>', methods=['PATCH'])
